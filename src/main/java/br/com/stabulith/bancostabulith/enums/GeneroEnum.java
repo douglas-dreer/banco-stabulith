@@ -1,16 +1,18 @@
 package br.com.stabulith.bancostabulith.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public enum TipoConta {
-    CONTA_CORRENTE("Conta Corrente"),
-        CONTA_POUPANCA("Conta Poupança");
+public enum GeneroEnum {
+    M("Masculino"),
+    F("Feminino"),
+    OUTROS("Outros");
 
     private String descricao;
 
+    GeneroEnum buscarPorSigla(String name) {
+        return GeneroEnum.valueOf(name);
+    }
 }

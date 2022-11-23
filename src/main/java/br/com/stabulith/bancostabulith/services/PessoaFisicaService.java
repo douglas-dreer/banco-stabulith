@@ -1,42 +1,34 @@
 package br.com.stabulith.bancostabulith.services;
 
-import br.com.stabulith.bancostabulith.entities.PessoaFisicaEntity;
-import br.com.stabulith.bancostabulith.entities.TipoDocumentoEntity;
-import br.com.stabulith.bancostabulith.models.PessoaFisica;
-import br.com.stabulith.bancostabulith.repositories.DocumentoRepository;
+import br.com.stabulith.bancostabulith.entities.PessoaFisica;
+import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
 import br.com.stabulith.bancostabulith.repositories.PessoaFisicaRepository;
-import br.com.stabulith.bancostabulith.repositories.TipoDocumentoRepository;
+import br.com.stabulith.bancostabulith.utils.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 public class PessoaFisicaService {
     @Autowired
+    private MapperUtil mapperUtil;
+
+    @Autowired
     private PessoaFisicaRepository repository;
 
-    @Autowired
-    private TipoDocumentoRepository tipoDocumentoRepository;
-
-    @Autowired
-    private DocumentoRepository documentoRepository;
-
-    public PessoaFisica salvar(PessoaFisica pessoaFisica) {
-        PessoaFisicaEntity pessoaFisicaEntity = pessoaFisica.convertToEntity();
-        pessoaFisicaEntity.getDocumentoList().stream().map(documento -> {
-            TipoDocumentoEntity tipoDocumento = documento.getTipoDocumento();
-            tipoDocumento = tipoDocumentoRepository.findBySigla(tipoDocumento.getSigla());
-            documento.setTipoDocumento(tipoDocumento);
-            return documento;
-        });
-        return repository.save(pessoaFisicaEntity).convertToModel();
-
+    public List<PessoaFisicaDTO> listar(){
+        List<PessoaFisica> resultado = (List<PessoaFisica>) repository.findAll();
+        return mapperUtil.mapList(resultado, PessoaFisicaDTO.class);
     }
 
-    public List<PessoaFisica> listar() {
-        List<PessoaFisicaEntity> entityList = (List<PessoaFisicaEntity>) repository.findAll();
-        return entityList.stream().map(entity -> entity.convertToModel()).collect(Collectors.toList());
+    public PessoaFisicaDTO buscarPorId(UUID id) {
+        return mapperUtil.convertTo(repository.findById(id).get(), PessoaFisicaDTO.class);
+    }
+
+    public PessoaFisicaDTO salvar(PessoaFisicaDTO dto) {
+        PessoaFisica save = repository.save(mapperUtil.convertTo(dto, PessoaFisica.class));
+        return mapperUtil.convertTo(save, PessoaFisicaDTO.class);
     }
 }
