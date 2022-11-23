@@ -1,22 +1,20 @@
-
 spring:
-  application:
-    name: Banco Stabulith
-    profiles:
-      active: main
-
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: Admin@123
+    url: jdbc:postgresql://localhost:5432/banco-stabulith
   jpa:
-    database: POSTGRESQL
-    show-sql: 'true'
+    show-sql: true
+    generate-ddl: true
     hibernate:
       ddl-auto: create-drop
-  datasource:
-    url: jdbc:h2:mem:banco-stabulith
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-    jpa:
-      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    database: postgresql
+  sql:
+    init:
+      platform: postgres
+      mode: always
+      continue-on-error: true
 server:
   servlet:
     context-path: /stabulith/v1
