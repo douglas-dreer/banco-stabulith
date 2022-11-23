@@ -1,0 +1,23 @@
+
+spring:
+  application:
+    name: Banco Stabulith
+    profiles:
+      active: main
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:h2:mem:banco-stabulith
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    jpa:
+      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+server:
+  servlet:
+    context-path: /stabulith/v1
+  port: '8080'
