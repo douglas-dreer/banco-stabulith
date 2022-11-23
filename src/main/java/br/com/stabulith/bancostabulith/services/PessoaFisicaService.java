@@ -31,4 +31,8 @@ public class PessoaFisicaService {
         PessoaFisica save = repository.save(mapperUtil.convertTo(dto, PessoaFisica.class));
         return mapperUtil.convertTo(save, PessoaFisicaDTO.class);
     }
+
+    public void excluir(UUID id) {
+       repository.deleteById(id);
+    }
 }

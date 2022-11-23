@@ -22,12 +22,6 @@ public class PessoaFisicaController {
     @Autowired
     private PessoaFisicaService pessoaFisicaService;
 
-    @PostMapping
-    public ResponseEntity<PessoaFisicaDTO> salvar(@RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
-        dto = pessoaFisicaService.salvar(dto);
-        return ResponseEntity.created(new URI(String.format("%s/%s", httpServletRequest.getRequestURL(), dto.getId()))).build();
-    }
-
     @GetMapping
     public ResponseEntity<List<PessoaFisicaDTO>> listar(){
         return ResponseEntity.ok(pessoaFisicaService.listar());
@@ -37,4 +31,24 @@ public class PessoaFisicaController {
     public ResponseEntity<PessoaFisicaDTO> buscarPorId(@PathVariable UUID id ){
         return ResponseEntity.ok(pessoaFisicaService.buscarPorId(id));
     }
+
+    @PostMapping
+    public ResponseEntity<PessoaFisicaDTO> salvar(@RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
+        dto = pessoaFisicaService.salvar(dto);
+        return ResponseEntity.created(new URI(String.format("%s/%s", httpServletRequest.getRequestURL(), dto.getId()))).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PessoaFisicaDTO> editar(@PathVariable UUID id, @RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
+        dto = pessoaFisicaService.salvar(dto);
+        return ResponseEntity.created(new URI(String.format("%s/%s", httpServletRequest.getRequestURL(), dto.getId()))).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PessoaFisicaDTO> excluir(@PathVariable UUID id) throws URISyntaxException {
+        pessoaFisicaService.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
