@@ -7,6 +7,7 @@ import br.com.stabulith.bancostabulith.utils.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +29,7 @@ public class PessoaFisicaService {
     }
 
     public PessoaFisicaDTO salvar(PessoaFisicaDTO dto) {
+        dto.setDataModificacao(LocalDateTime.now());
         PessoaFisica save = repository.save(mapperUtil.convertTo(dto, PessoaFisica.class));
         return mapperUtil.convertTo(save, PessoaFisicaDTO.class);
     }
