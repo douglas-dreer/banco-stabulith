@@ -21,6 +21,7 @@ public class PessoaFisicaDTO {
     private int idade;
     private GeneroEnum genero;
     private AfiliacaoDTO afiliacao;
+    private List<DocumentoDTO> documentos;
     private List<TelefoneContatoDTO> telefonesContato;
     private List<EnderecoDTO> enderecos;
     private LocalDateTime dataCriacao;
