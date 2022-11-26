@@ -52,7 +52,7 @@ public class Endereco {
     }
 
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         this.dataModificacao = LocalDateTime.now();
     }
 

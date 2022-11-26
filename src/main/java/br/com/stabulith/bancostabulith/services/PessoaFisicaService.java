@@ -1,6 +1,5 @@
 package br.com.stabulith.bancostabulith.services;
 
-import br.com.stabulith.bancostabulith.entities.Documento;
 import br.com.stabulith.bancostabulith.entities.PessoaFisica;
 import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
 import br.com.stabulith.bancostabulith.repositories.PessoaFisicaRepository;
@@ -23,7 +22,7 @@ public class PessoaFisicaService {
     @Autowired
     private PessoaFisicaRepository repository;
 
-    public List<PessoaFisicaDTO> listar(){
+    public List<PessoaFisicaDTO> listar() {
         List<PessoaFisica> resultado = (List<PessoaFisica>) repository.findAll();
         return mapperUtil.mapList(resultado, PessoaFisicaDTO.class);
     }
@@ -37,7 +36,7 @@ public class PessoaFisicaService {
         try {
             Optional<UUID> uuidOptional = Optional.ofNullable(dto.getId());
 
-            if (uuidOptional.isPresent()){
+            if (uuidOptional.isPresent()) {
                 dto.setDataModificacao(LocalDateTime.now());
             }
 

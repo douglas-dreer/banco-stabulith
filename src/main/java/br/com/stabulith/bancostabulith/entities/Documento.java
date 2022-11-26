@@ -48,7 +48,7 @@ public class Documento {
     }
 
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         this.dataModificacao = LocalDateTime.now();
     }
 }

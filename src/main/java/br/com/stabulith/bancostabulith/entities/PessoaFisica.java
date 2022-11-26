@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name ="STBLTH_001_PESSOA_FISICA")
+@Table(name = "STBLTH_001_PESSOA_FISICA")
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,16 +41,16 @@ public class PessoaFisica implements Serializable {
 
     private GeneroEnum genero;
 
-    @OneToOne(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Afiliacao afiliacao;
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Documento> documentos;
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TelefoneContato> telefonesContato;
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Endereco> enderecos;
 
     @Column(updatable = false)
@@ -68,7 +68,7 @@ public class PessoaFisica implements Serializable {
     }
 
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         this.dataModificacao = LocalDateTime.now();
     }
 }

@@ -7,32 +7,43 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "STBLTH_002_AFILIACAO")
-
+@Table(name = "stblth_006_pessoa_juridica")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Afiliacao implements Serializable {
+public class PessoaJuridica {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "afiliacao_id", updatable = false, nullable = false)
+    @Column(name = "pessoa_fisica_id", updatable = false, nullable = false)
     private UUID id;
 
-    private String nomeCompletoMae;
-    private String nomeCompletoPai;
+    @Column(nullable = false)
+    private String razaoSocial;
+    private String nomeFantasia;
 
-    @Column(name = "paisDesconhecido")
-    private boolean isPaisDesconhecidos;
+    private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaFisica> funcionarios;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Documento> documentos;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TelefoneContato> telefonesContato;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Endereco> enderecos;
 
     @Column(updatable = false)
     private LocalDateTime dataCriacao;

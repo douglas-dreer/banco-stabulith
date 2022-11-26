@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class MapperUtil {
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
+
     public <D> D convertTo(Object bean, Class<D> dto) {
         return modelMapper.map(bean, dto);
     }

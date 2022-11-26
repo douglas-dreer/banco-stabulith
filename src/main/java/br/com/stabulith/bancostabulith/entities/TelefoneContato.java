@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name ="STBLTH_003_TELEFONE_CONTATO")
+@Table(name = "STBLTH_003_TELEFONE_CONTATO")
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -51,7 +51,7 @@ public class TelefoneContato {
     }
 
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         this.dataModificacao = LocalDateTime.now();
     }
 

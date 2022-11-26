@@ -1,8 +1,8 @@
 package br.com.stabulith.bancostabulith.controllers;
 
 import br.com.stabulith.bancostabulith.enums.MensagemEnum;
-import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
-import br.com.stabulith.bancostabulith.services.PessoaFisicaService;
+import br.com.stabulith.bancostabulith.models.PessoaJuridicaDTO;
+import br.com.stabulith.bancostabulith.services.PessoaJuridicaService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +18,24 @@ import java.util.UUID;
 import static br.com.stabulith.bancostabulith.enums.MensagemEnum.*;
 
 @RestController
-@RequestMapping("/cadastro/pessoa-fisica")
+@RequestMapping("/cadastro/pessoa-juridica")
 @Log4j2
-public class PessoaFisicaController {
+public class PessoaJuridicaController {
 
     @Autowired
     HttpServletRequest httpServletRequest;
 
     @Autowired
-    private PessoaFisicaService pessoaFisicaService;
+    private PessoaJuridicaService pessoaJuridicaService;
 
     @GetMapping
-    public ResponseEntity<List<PessoaFisicaDTO>> listar() {
-        return ResponseEntity.ok(pessoaFisicaService.listar());
+    public ResponseEntity<List<PessoaJuridicaDTO>> listar() {
+        return ResponseEntity.ok(pessoaJuridicaService.listar());
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<PessoaFisicaDTO> buscarPorId(@PathVariable UUID id) {
-        PessoaFisicaDTO resultado = pessoaFisicaService.buscarPorId(id);
+    public ResponseEntity<PessoaJuridicaDTO> buscarPorId(@PathVariable UUID id) {
+        PessoaJuridicaDTO resultado = pessoaJuridicaService.buscarPorId(id);
 
         if (resultado.getId() == null) {
             log.info(MensagemEnum.NAO_FOI_ENCONTRADO_REGISTROS.getDescricao());
@@ -45,9 +45,9 @@ public class PessoaFisicaController {
         return ResponseEntity.ok(resultado);
     }
 
-    @GetMapping(path = "", params = "cpf")
-    public ResponseEntity<PessoaFisicaDTO> buscarPorCpf(@RequestParam(name = "cpf") long cpf) {
-        PessoaFisicaDTO resultado = pessoaFisicaService.buscarPorCpf(cpf);
+    @GetMapping(path = "", params = "cnpj")
+    public ResponseEntity<PessoaJuridicaDTO> buscarPorCpf(@RequestParam(name = "cnpj") long cnpj) {
+        PessoaJuridicaDTO resultado = pessoaJuridicaService.buscarPorCNPJ(cnpj);
         if (resultado == null || resultado.getId() == null) {
             log.info(NAO_FOI_ENCONTRADO_REGISTROS);
             return ResponseEntity.ok(null);
@@ -56,8 +56,8 @@ public class PessoaFisicaController {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaFisicaDTO> salvar(@RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
-        dto = pessoaFisicaService.salvar(dto);
+    public ResponseEntity<PessoaJuridicaDTO> salvar(@RequestBody PessoaJuridicaDTO dto) throws URISyntaxException {
+        dto = pessoaJuridicaService.salvar(dto);
         if (dto == null) {
             log.error(ERRO_INTERNO.getDescricao());
             return ResponseEntity.internalServerError().build();
@@ -66,19 +66,19 @@ public class PessoaFisicaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaFisicaDTO> editar(@PathVariable UUID id, @RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
+    public ResponseEntity<PessoaJuridicaDTO> editar(@PathVariable UUID id, @RequestBody PessoaJuridicaDTO dto) throws URISyntaxException {
         if (!id.equals(dto.getId())) {
             log.warn(PARAMETROS_INCORRETOS.getDescricao());
             return ResponseEntity.badRequest().build();
         }
         dto.setDataModificacao(LocalDateTime.now());
-        dto = pessoaFisicaService.salvar(dto);
+        dto = pessoaJuridicaService.salvar(dto);
         return ResponseEntity.created(new URI(String.format("%s/%s", httpServletRequest.getRequestURL(), dto.getId()))).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PessoaFisicaDTO> excluir(@PathVariable UUID id) {
-        if (!pessoaFisicaService.excluir(id)) {
+    public ResponseEntity<PessoaJuridicaDTO> excluir(@PathVariable UUID id) {
+        if (!pessoaJuridicaService.excluir(id)) {
             log.info(NAO_FOI_ENCONTRADO_REGISTROS.getDescricao());
             return ResponseEntity.notFound().build();
         }
