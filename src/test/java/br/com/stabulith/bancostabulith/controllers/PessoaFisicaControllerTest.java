@@ -9,7 +9,6 @@ import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
 import br.com.stabulith.bancostabulith.services.PessoaFisicaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,13 +38,11 @@ public class PessoaFisicaControllerTest {
     private final static String ENDPOINT = "/cadastro/pessoa-fisica";
     @Autowired
     private MockMvc mockMvc;
-    @InjectMocks
-    private PessoaFisicaController controller;
 
     @MockBean
     private PessoaFisicaService pessoaFisicaService;
 
-    private PessoaFisicaDTO pessoaFisica = new PessoaFisicaDTO();
+    private final PessoaFisicaDTO pessoaFisica = new PessoaFisicaDTO();
     private List<PessoaFisicaDTO> pessoaFisicaList = new ArrayList<>();
 
     @BeforeEach
@@ -236,7 +233,7 @@ public class PessoaFisicaControllerTest {
         mockMvc
                 .perform(deleteMethod)
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isAccepted());
     }
 
     @Test
@@ -247,13 +244,11 @@ public class PessoaFisicaControllerTest {
         deleteMethod
                 .contentType(MediaType.APPLICATION_JSON_VALUE);
 
-        when(pessoaFisicaService.excluir(any())).thenReturn(true);
+        when(pessoaFisicaService.excluir(any())).thenReturn(false);
 
         mockMvc
                 .perform(deleteMethod)
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
-
-
 }
