@@ -28,8 +28,7 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -190,18 +189,70 @@ public class PessoaFisicaControllerTest {
     void mustReturnIsCreated_WhenEditar() throws Exception {
         String bodyJson = pessoaFisica.toJSON();
 
-        MockHttpServletRequestBuilder postMethod = post(ENDPOINT);
-        postMethod
+        final String URI = ENDPOINT.concat("/{id}");
+
+        MockHttpServletRequestBuilder putMethod = put(URI, pessoaFisica.getId().toString());
+        putMethod
                 .content(bodyJson)
                 .contentType(MediaType.APPLICATION_JSON_VALUE);
-
 
         when(pessoaFisicaService.salvar(any())).thenReturn(pessoaFisica);
 
         mockMvc
-                .perform(postMethod)
+                .perform(putMethod)
                 .andDo(print())
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void mustReturnIsCreated_WhenEditar_WithIdDiff() throws Exception {
+        String bodyJson = pessoaFisica.toJSON();
+
+        final String URI = ENDPOINT.concat("/{id}");
+
+        MockHttpServletRequestBuilder putMethod = put(URI, UUID.randomUUID().toString());
+        putMethod
+                .content(bodyJson)
+                .contentType(MediaType.APPLICATION_JSON_VALUE);
+
+        when(pessoaFisicaService.salvar(any())).thenReturn(pessoaFisica);
+
+        mockMvc
+                .perform(putMethod)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void mustReturnIsAccepted_WhenExcluir() throws Exception {
+        final String URI = ENDPOINT.concat("/{id}");
+
+        MockHttpServletRequestBuilder deleteMethod = delete(URI, pessoaFisica.getId().toString());
+        deleteMethod
+                .contentType(MediaType.APPLICATION_JSON_VALUE);
+
+        when(pessoaFisicaService.excluir(any())).thenReturn(true);
+
+        mockMvc
+                .perform(deleteMethod)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void mustReturnIsNotFound_WhenExcluir() throws Exception {
+        final String URI = ENDPOINT.concat("/{id}");
+
+        MockHttpServletRequestBuilder deleteMethod = delete(URI, pessoaFisica.getId().toString());
+        deleteMethod
+                .contentType(MediaType.APPLICATION_JSON_VALUE);
+
+        when(pessoaFisicaService.excluir(any())).thenReturn(true);
+
+        mockMvc
+                .perform(deleteMethod)
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
 

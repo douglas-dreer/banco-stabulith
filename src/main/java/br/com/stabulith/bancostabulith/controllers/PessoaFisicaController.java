@@ -67,7 +67,7 @@ public class PessoaFisicaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaFisicaDTO> editar(@PathVariable UUID id, @RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
+    public ResponseEntity<PessoaFisicaDTO> editar(@PathVariable(name = "id") UUID id, @RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
         if (!id.equals(dto.getId())) {
             log.warn(PARAMETROS_INCORRETOS.getDescricao());
             return ResponseEntity.badRequest().build();
@@ -83,7 +83,7 @@ public class PessoaFisicaController {
             log.info(NAO_FOI_ENCONTRADO_REGISTROS.getDescricao());
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(null);
+        return ResponseEntity.accepted().build();
     }
 
 
