@@ -5,6 +5,7 @@ import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
 import br.com.stabulith.bancostabulith.services.PessoaFisicaService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,14 +49,14 @@ public class PessoaFisicaController {
     @GetMapping(path = "", params = "cpf")
     public ResponseEntity<PessoaFisicaDTO> buscarPorCpf(@RequestParam(name = "cpf") long cpf) {
         PessoaFisicaDTO resultado = pessoaFisicaService.buscarPorCpf(cpf);
-        if (resultado == null || resultado.getId() == null) {
+        if (resultado.getId() == null) {
             log.info(NAO_FOI_ENCONTRADO_REGISTROS);
             return ResponseEntity.ok(null);
         }
         return ResponseEntity.ok(resultado);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PessoaFisicaDTO> salvar(@RequestBody PessoaFisicaDTO dto) throws URISyntaxException {
         dto = pessoaFisicaService.salvar(dto);
         if (dto == null) {
