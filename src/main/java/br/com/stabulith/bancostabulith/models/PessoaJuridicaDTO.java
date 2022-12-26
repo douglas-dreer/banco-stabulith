@@ -1,8 +1,9 @@
 package br.com.stabulith.bancostabulith.models;
 
-import br.com.stabulith.bancostabulith.entities.Documento;
-import br.com.stabulith.bancostabulith.entities.Endereco;
-import br.com.stabulith.bancostabulith.entities.TelefoneContato;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
