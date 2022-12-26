@@ -48,4 +48,11 @@ public class PessoaJuridicaDTO {
     public void preUpdate() {
         this.dataModificacao = LocalDateTime.now();
     }
+
+    public String toJSON() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        return mapper.writeValueAsString(this);
+    }
 }
