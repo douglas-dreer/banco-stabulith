@@ -25,10 +25,10 @@ public class PessoaJuridicaDTO {
     private String nomeFantasia;
     private String email;
 
-    private List<Documento> documentos;
+    private List<DocumentoDTO> documentos;
     private List<PessoaFisicaDTO> funcionarios;
-    private List<TelefoneContato> telefonesContato;
-    private List<Endereco> enderecos;
+    private List<TelefoneContatoDTO> telefonesContato;
+    private List<EnderecoDTO> enderecos;
 
     @Column(updatable = false)
     private LocalDateTime dataCriacao;
