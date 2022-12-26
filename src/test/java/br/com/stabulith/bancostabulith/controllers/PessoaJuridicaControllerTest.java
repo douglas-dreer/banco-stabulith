@@ -17,10 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,10 +43,15 @@ public class PessoaJuridicaControllerTest {
 
     @BeforeEach
     public void setup() {
-        DocumentoDTO documentoCPF = new DocumentoDTO();
-        documentoCPF.setNumero(14431620000190L);
-        documentoCPF.setTipoDocumento(TipoDocumentoEnum.CNPJ);
-        List<DocumentoDTO> documentoList = Collections.singletonList(documentoCPF);
+        DocumentoDTO documentoCNPJ = new DocumentoDTO();
+        documentoCNPJ.setNumero(14431620000190L);
+        documentoCNPJ.setTipoDocumento(TipoDocumentoEnum.CNPJ);
+
+        DocumentoDTO documentoIE = new DocumentoDTO();
+        documentoIE.setNumero(4345364354343L);
+        documentoIE.setTipoDocumento(TipoDocumentoEnum.IE);
+
+        List<DocumentoDTO> documentoList = Arrays.asList(documentoCNPJ, documentoIE);
 
         TelefoneContatoDTO telefoneComercial = new TelefoneContatoDTO();
         telefoneComercial.setNumero(40041331);
@@ -86,6 +88,7 @@ public class PessoaJuridicaControllerTest {
         mockMvc.perform(getMethod)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(1)));
+
     }
 
     @Test

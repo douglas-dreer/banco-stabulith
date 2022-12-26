@@ -1,10 +1,6 @@
 package br.com.stabulith.bancostabulith.controllers;
 
-import br.com.stabulith.bancostabulith.enums.TipoDocumentoEnum;
-import br.com.stabulith.bancostabulith.enums.TipoEnderecoEnum;
-import br.com.stabulith.bancostabulith.models.AfiliacaoDTO;
-import br.com.stabulith.bancostabulith.models.DocumentoDTO;
-import br.com.stabulith.bancostabulith.models.EnderecoDTO;
+import br.com.stabulith.bancostabulith.ConfiguracaoTest;
 import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
 import br.com.stabulith.bancostabulith.services.PessoaFisicaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PessoaFisicaControllerTest {
+public class PessoaFisicaControllerTest extends ConfiguracaoTest {
     private final static String ENDPOINT = "/cadastro/pessoa-fisica";
     @Autowired
     private MockMvc mockMvc;
@@ -42,43 +33,13 @@ public class PessoaFisicaControllerTest {
     @MockBean
     private PessoaFisicaService pessoaFisicaService;
 
-    private final PessoaFisicaDTO pessoaFisica = new PessoaFisicaDTO();
+    private PessoaFisicaDTO pessoaFisica = new PessoaFisicaDTO();
     private List<PessoaFisicaDTO> pessoaFisicaList = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
-        DocumentoDTO documentoCPF = new DocumentoDTO();
-        documentoCPF.setNumero(12345678900L);
-        documentoCPF.setTipoDocumento(TipoDocumentoEnum.CPF);
-        List<DocumentoDTO> documentoList = Collections.singletonList(documentoCPF);
-
-        EnderecoDTO enderecoResidencial = new EnderecoDTO();
-        enderecoResidencial.setLogradouro("Rua Brasil");
-        enderecoResidencial.setNumero(1500);
-        enderecoResidencial.setCep(8888888L);
-        enderecoResidencial.setTipoEndereco(TipoEnderecoEnum.RESIDENCIAL);
-        enderecoResidencial.setCidade("São Paulo");
-        enderecoResidencial.setEstado("SP");
-        List<EnderecoDTO> enderecoList = Collections.singletonList(enderecoResidencial);
-
-        AfiliacaoDTO afiliacao = new AfiliacaoDTO();
-        afiliacao.setNomeCompletoPai("João da Silva");
-        afiliacao.setNomeCompletoMae("Maria da Silva");
-        afiliacao.setPaisDesconhecidos(false);
-
-        pessoaFisica.setId(UUID.randomUUID());
-        pessoaFisica.setNomeCompleto("Enzo da Silva");
-        pessoaFisica.setDocumentos(documentoList);
-        pessoaFisica.setIdade(18);
-        pessoaFisica.setEnderecos(enderecoList);
-        pessoaFisica.setEmail("enzo.silva@email.com.br");
-        pessoaFisica.setAfiliacao(afiliacao);
-        pessoaFisica.setDataNascimento(LocalDate.now());
-        pessoaFisica.setDataCriacao(LocalDateTime.now());
-        pessoaFisica.setDataModificacao(LocalDateTime.now());
-
-        pessoaFisicaList = Collections.singletonList(pessoaFisica);
-
+       pessoaFisicaList = this.criarPessoaFisicaDTOList();
+       pessoaFisica = this.criarPessoaFisicaDTO();
     }
 
     @Test

@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -38,6 +39,8 @@ public class PessoaFisica implements Serializable {
 
     @Column(length = 2)
     private int idade;
+
+    private LocalDate dataNascimento;
 
     private GeneroEnum genero;
 

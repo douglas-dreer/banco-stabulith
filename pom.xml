@@ -65,6 +65,15 @@
             <version>2.13.4</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.openpojo/openpojo -->
+        <dependency>
+            <groupId>com.openpojo</groupId>
+            <artifactId>openpojo</artifactId>
+            <version>0.9.1</version>
+            <scope>test</scope>
+        </dependency>
+
+
 
     </dependencies>
 
