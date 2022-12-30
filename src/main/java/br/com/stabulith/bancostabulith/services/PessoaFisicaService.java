@@ -1,6 +1,7 @@
 package br.com.stabulith.bancostabulith.services;
 
 import br.com.stabulith.bancostabulith.entities.PessoaFisica;
+import br.com.stabulith.bancostabulith.enums.MensagemEnum;
 import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
 import br.com.stabulith.bancostabulith.repositories.PessoaFisicaRepository;
 import br.com.stabulith.bancostabulith.utils.MapperUtil;
@@ -32,7 +33,7 @@ public class PessoaFisicaService {
     }
 
     public PessoaFisicaDTO salvar(PessoaFisicaDTO dto) {
-        PessoaFisica pessoaFisicaSalvo = new PessoaFisica();
+        PessoaFisica pessoaFisicaSalvo;
         try {
             Optional<UUID> uuidOptional = Optional.ofNullable(dto.getId());
 
@@ -50,15 +51,18 @@ public class PessoaFisicaService {
     }
 
     public boolean excluir(UUID id) {
+        boolean status = false;
         try {
-            if (!repository.existsById(id)) {
-                return false;
+            if (Optional.ofNullable(id).isPresent() && repository.existsById(id)){
+                repository.deleteById(id);
+                status = true;
+            } else {
+                throw new Exception(MensagemEnum.NAO_FOI_ENCONTRADO_REGISTROS.getDescricao());
             }
-            repository.deleteById(id);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-        return true;
+        return status;
     }
 
     public PessoaFisicaDTO buscarPorCpf(long cpf) {

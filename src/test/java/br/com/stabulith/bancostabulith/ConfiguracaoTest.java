@@ -6,10 +6,7 @@ import br.com.stabulith.bancostabulith.entities.Endereco;
 import br.com.stabulith.bancostabulith.entities.PessoaFisica;
 import br.com.stabulith.bancostabulith.enums.TipoDocumentoEnum;
 import br.com.stabulith.bancostabulith.enums.TipoEnderecoEnum;
-import br.com.stabulith.bancostabulith.models.AfiliacaoDTO;
-import br.com.stabulith.bancostabulith.models.DocumentoDTO;
-import br.com.stabulith.bancostabulith.models.EnderecoDTO;
-import br.com.stabulith.bancostabulith.models.PessoaFisicaDTO;
+import br.com.stabulith.bancostabulith.models.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
