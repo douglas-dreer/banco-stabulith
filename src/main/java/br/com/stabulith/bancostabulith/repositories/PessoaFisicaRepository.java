@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PessoaFisicaRepository extends CrudRepository<PessoaFisica, UUID> {
+public interface PessoaFisicaRepository extends CrudRepository<PessoaFisica, UUID>{
 
     @Query(
             value = "SELECT DISTINCT ps FROM PessoaFisica ps " +

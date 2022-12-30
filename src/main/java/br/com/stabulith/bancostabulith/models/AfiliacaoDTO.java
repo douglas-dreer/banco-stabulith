@@ -21,4 +21,12 @@ public class AfiliacaoDTO {
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
     private boolean isAtivo;
+
+    public AfiliacaoDTO(String nomeCompletoMae, String nomeCompletoPai) {
+        this.nomeCompletoMae = nomeCompletoMae;
+        this.nomeCompletoPai = nomeCompletoPai;
+        this.isPaisDesconhecidos = false;
+        this.dataCriacao = LocalDateTime.now();
+        this.isAtivo = true;
+    }
 }

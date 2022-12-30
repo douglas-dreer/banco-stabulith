@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,7 +16,6 @@ import java.util.UUID;
 public class TelefoneContatoDTO {
     private UUID id;
 
-    @Column(length = 2)
     private int ddd;
     private long numero;
     private TipoTelefoneEnum tipoTelefoneContato;
@@ -26,4 +24,21 @@ public class TelefoneContatoDTO {
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
     private boolean isAtivo;
+
+    public TelefoneContatoDTO(int ddd, long numero, TipoTelefoneEnum tipoTelefoneContato){
+        this.ddd = ddd;
+        this.numero = numero;
+        this.tipoTelefoneContato = tipoTelefoneContato;
+        this.dataCriacao = LocalDateTime.now();
+        this.dataModificacao = LocalDateTime.now();
+    }
+    public TelefoneContatoDTO(int ddd, long numero, TipoTelefoneEnum tipoTelefoneContato, int ramal, boolean isRamal){
+        this.ddd = ddd;
+        this.numero = numero;
+        this.tipoTelefoneContato = tipoTelefoneContato;
+        this.ramal = ramal;
+        this.isRamal = isRamal;
+    }
+
+
 }

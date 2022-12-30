@@ -26,4 +26,17 @@ public class EnderecoDTO {
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
     private boolean isAtivo;
+
+    public EnderecoDTO(String logradouro, int numero, String complemento, String pontoReferencia, long cep, String cidade, String estado, TipoEnderecoEnum tipoEndereco) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.pontoReferencia = pontoReferencia;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.tipoEndereco = tipoEndereco;
+        this.dataCriacao = LocalDateTime.now();
+        this.isAtivo = true;
+    }
 }

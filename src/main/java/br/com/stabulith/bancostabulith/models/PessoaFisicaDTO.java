@@ -34,6 +34,22 @@ public class PessoaFisicaDTO {
     private LocalDateTime dataModificacao;
     private boolean isAtivo;
 
+
+    public PessoaFisicaDTO(String nome, String email, int idade, LocalDate dataNascimento, GeneroEnum genero, AfiliacaoDTO afiliacao, List<DocumentoDTO> documentos, List<TelefoneContatoDTO> telefoneContatos, List<EnderecoDTO> enderecos) {
+        this.nomeCompleto = nome;
+        this.email = email;
+        this.idade = idade;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.afiliacao = afiliacao;
+        this.documentos = documentos;
+        this.telefonesContato = telefoneContatos;
+        this.enderecos = enderecos;
+        this.dataCriacao = LocalDateTime.now();
+        this.isAtivo = true;
+    }
+
+
     public String toJSON() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
